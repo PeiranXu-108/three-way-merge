@@ -14,12 +14,12 @@ const App: React.FC = () => {
       </header>
 
       <section className="demo-editor">
-        <ThreeWayDiffEditor oldContent={oldContent} newContent={newContent} onChange={setMergedContent} leftColumnTitle='本地版本' rightColumnTitle='线上版本'/>
+        <ThreeWayDiffEditor oldContent={oldContent} newContent={newContent} onChange={setMergedContent}/>
       </section>
 
       <section className="demo-output">
-        <div className="output-header">合并结果</div>
-        <pre className="output-content">{mergedContent || '（暂无更改）'}</pre>
+        <div className="output-header">Merge Result</div>
+        <pre className="output-content">{mergedContent || '(No changes)'}</pre>
       </section>
     </div>
   );

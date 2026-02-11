@@ -14,6 +14,7 @@ import {
   EXPAND_STEP,
   OVERSCAN_COUNT,
 } from './utils';
+import { getMessages, I18nContext } from './i18n';
 import CollapsedRow from './components/CollapsedRow';
 import DiffLineComponent from './components/DiffLineComponent';
 import FreeEditPanel from './components/FreeEditPanel';
@@ -33,10 +34,19 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   middleContent,
   onChange,
   onHasChangesChange,
-  leftColumnTitle = '版本1',
-  rightColumnTitle = '版本2',
+  leftColumnTitle,
+  rightColumnTitle,
   collapseUnchangedLines = true,
+  locale = 'en',
+  messages: messagesOverride,
 }) => {
+  const messages = useMemo(
+    () => getMessages(locale, messagesOverride),
+    [locale, messagesOverride]
+  );
+  const effectiveLeftTitle = leftColumnTitle ?? messages.defaultLeftColumnTitle;
+  const effectiveRightTitle = rightColumnTitle ?? messages.defaultRightColumnTitle;
+
   const [editMode, setEditMode] = useState<boolean>(false);
   const [freeEditContent, setFreeEditContent] = useState<string>('');
   const [initialFreeEditContent, setInitialFreeEditContent] = useState<string>('');
@@ -535,44 +545,45 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   }, [oldContent, newContent]);
 
   return (
+    <I18nContext.Provider value={messages}>
     <div className="three-way-diff-container" ref={containerRef}>
       <canvas ref={canvasRef} className="connector-canvas" />
       <div className="diff-toolbar">
         <div className="toolbar-left">
           <button type="button" className="twd-btn twd-btn-sm" onClick={acceptAllLeft}>
-            全部接受左侧
+            {messages.acceptAllLeft}
           </button>
           <button type="button" className="twd-btn twd-btn-sm" onClick={acceptAllRight}>
-            全部接受右侧
+            {messages.acceptAllRight}
           </button>
           <button type="button" className="twd-btn twd-btn-sm" onClick={reset}>
-            重置
+            {messages.reset}
           </button>
         </div>
         <div className="toolbar-right">
           <span className="diff-stats">
-            总行数: {stats.total} | 新增: <span className="stat-added">{stats.added}</span> | 删除:{' '}
-            <span className="stat-removed">{stats.removed}</span> | 修改: <span className="stat-modified">{stats.modified}</span> | 剩余冲突:{' '}
+            {messages.statsTotal}: {stats.total} | {messages.statsAdded}: <span className="stat-added">{stats.added}</span> | {messages.statsRemoved}:{' '}
+            <span className="stat-removed">{stats.removed}</span> | {messages.statsModified}: <span className="stat-modified">{stats.modified}</span> | {messages.statsConflicts}:{' '}
             <span className="stat-conflicts">{stats.conflicts}</span>
           </span>
         </div>
       </div>
 
       <div className="diff-headers">
-        <div className="panel-header left">{leftColumnTitle}</div>
+        <div className="panel-header left">{effectiveLeftTitle}</div>
         <div className="panel-header middle">
-          合并结果
+          {messages.mergeResult}
           <div className="header-actions">
             <button
               type="button"
               className={editMode ? 'twd-btn twd-btn-sm twd-btn-primary' : 'twd-btn twd-btn-sm'}
               onClick={handleToggleEditMode}
             >
-              {editMode ? '退出编辑' : '自由编辑'}
+              {editMode ? messages.exitEdit : messages.freeEdit}
             </button>
           </div>
         </div>
-        <div className="panel-header right">{rightColumnTitle}</div>
+        <div className="panel-header right">{effectiveRightTitle}</div>
       </div>
 
       <div className="diff-panels">
@@ -704,10 +715,10 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
             <div className="twd-modal">
               <div className="twd-modal-content">
                 <div className="twd-modal-header">
-                  <span id="twd-modal-title" className="twd-modal-title">保存更改</span>
-                  <button type="button" className="twd-modal-close" onClick={() => setSaveModalVisible(false)} aria-label="关闭">×</button>
+                  <span id="twd-modal-title" className="twd-modal-title">{messages.saveChanges}</span>
+                  <button type="button" className="twd-modal-close" onClick={() => setSaveModalVisible(false)} aria-label={messages.close}>×</button>
                 </div>
-                <div className="twd-modal-body">编辑内容已更改，是否保存？</div>
+                <div className="twd-modal-body">{messages.confirmSaveMessage}</div>
                 <div className="twd-modal-footer">
                   <button
                     type="button"
@@ -718,7 +729,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
                       setEditMode(false);
                     }}
                   >
-                    丢弃
+                    {messages.discard}
                   </button>
                   <button
                     type="button"
@@ -742,7 +753,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
                       setEditMode(false);
                     }}
                   >
-                    保存
+                    {messages.save}
                   </button>
                 </div>
               </div>
@@ -751,6 +762,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
         </div>
       )}
     </div>
+    </I18nContext.Provider>
   );
 };
 

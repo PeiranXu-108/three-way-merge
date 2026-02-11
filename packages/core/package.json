@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Three-column diff editor with merge controls.",
   "license": "MIT",
-  "author": "",
+  "author": "ryanxu",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",

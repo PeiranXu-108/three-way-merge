@@ -2,7 +2,8 @@
  * 合并结果行组件（中间）
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
+import { I18nContext } from '../i18n';
 import { DiffLine, CodeBlock } from '../types';
 
 interface MergedLineComponentProps {
@@ -30,6 +31,7 @@ const MergedLineComponent: React.FC<MergedLineComponentProps> = ({
   onBlockSelectLeft,
   onBlockSelectRight,
 }) => {
+  const messages = useContext(I18nContext);
   // 只在"左右都有内容且不同"时显示双向选择按钮（减少 added/removed 行的噪音）
   const hasConflict = line.leftContent !== null && line.rightContent !== null && line.leftContent !== line.rightContent;
   const showButtons = hasConflict;
@@ -99,7 +101,7 @@ const MergedLineComponent: React.FC<MergedLineComponentProps> = ({
             className="twd-btn twd-btn-sm"
             onClick={onBlockSelectLeft}
             disabled={!codeBlock || !canAcceptLeft}
-            title={`接受左侧块（${codeBlock?.lineCount ?? 0}行）`}
+            title={messages.acceptLeftBlock(codeBlock?.lineCount ?? 0)}
           >
             ▶
           </button>
@@ -113,7 +115,7 @@ const MergedLineComponent: React.FC<MergedLineComponentProps> = ({
             className="twd-btn twd-btn-sm"
             onClick={onBlockSelectRight}
             disabled={!codeBlock || !canAcceptRight}
-            title={`接受右侧块（${codeBlock?.lineCount ?? 0}行）`}
+            title={messages.acceptRightBlock(codeBlock?.lineCount ?? 0)}
           >
             ◀
           </button>

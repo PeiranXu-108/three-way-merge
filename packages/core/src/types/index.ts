@@ -2,6 +2,8 @@
  * ThreeWayDiffEditor 类型定义
  */
 
+import type { ThreeWayMessages } from '../i18n';
+
 export interface CharDiff {
   type: 'added' | 'removed' | 'unchanged';
   value: string;
@@ -33,6 +35,10 @@ export interface ThreeWayDiffEditorProps {
   rightColumnTitle?: string;
   /** 是否折叠无 diff 的未变更行，默认 true（收缩）；设为 false 时始终展开 */
   collapseUnchangedLines?: boolean;
+  /** 语言：'en' | 'zh'，默认 'en' */
+  locale?: 'en' | 'zh';
+  /** 覆盖部分文案 */
+  messages?: Partial<ThreeWayMessages>;
 }
 
 export interface CodeBlock {
