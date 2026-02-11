@@ -31,6 +31,8 @@ export interface ThreeWayDiffEditorProps {
   leftColumnTitle?: string;
   /** 右侧列标题，默认 "版本2" */
   rightColumnTitle?: string;
+  /** 是否折叠无 diff 的未变更行，默认 true（收缩）；设为 false 时始终展开 */
+  collapseUnchangedLines?: boolean;
 }
 
 export interface CodeBlock {

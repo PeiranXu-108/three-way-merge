@@ -35,6 +35,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   onHasChangesChange,
   leftColumnTitle = '版本1',
   rightColumnTitle = '版本2',
+  collapseUnchangedLines = true,
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [freeEditContent, setFreeEditContent] = useState<string>('');
@@ -274,7 +275,10 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     });
   };
 
-  const renderRows = useMemo(() => buildRenderRows(diffLines, collapsedState), [diffLines, collapsedState]);
+  const renderRows = useMemo(
+    () => buildRenderRows(diffLines, collapsedState, collapseUnchangedLines),
+    [diffLines, collapsedState, collapseUnchangedLines]
+  );
   const rowMetrics = useMemo(() => buildRowMetrics(renderRows), [renderRows]);
 
   // 窗口化渲染，避免一次性渲染全部行导致卡顿

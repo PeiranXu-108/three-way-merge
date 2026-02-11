@@ -36,7 +36,8 @@ export const findRowIndex = (offsets: number[], offset: number) => {
 
 export const buildRenderRows = (
   diffLines: DiffLine[],
-  collapsedState: Record<string, CollapsedBlockState>
+  collapsedState: Record<string, CollapsedBlockState>,
+  collapseUnchangedLines: boolean = true
 ): RenderRow[] => {
   const rows: RenderRow[] = [];
   let i = 0;
@@ -60,7 +61,7 @@ export const buildRenderRows = (
     const blockId = `${start}-${end}`;
     const state = collapsedState[blockId] || { above: 0, below: 0, expanded: false };
 
-    if (len <= COLLAPSE_THRESHOLD || state.expanded) {
+    if (!collapseUnchangedLines || len <= COLLAPSE_THRESHOLD || state.expanded) {
       for (let k = start; k <= end; k += 1) rows.push({ kind: 'line', lineIndex: k, line: diffLines[k] });
       i = j;
       continue;
