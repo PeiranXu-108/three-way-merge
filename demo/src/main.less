@@ -1,0 +1,74 @@
+:root {
+  color: #1f2933;
+  background-color: #f3f6fb;
+  font-family: 'Segoe UI', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f3f6fb;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.demo-shell {
+  padding: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  h1 {
+    margin: 0 0 4px 0;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0;
+    color: #5f6c7b;
+    font-size: 13px;
+  }
+}
+
+.demo-editor {
+  background: #fff;
+  border: 1px solid #dfe3eb;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.demo-output {
+  margin-top: 16px;
+  background: #fff;
+  border: 1px solid #dfe3eb;
+  border-radius: 6px;
+  overflow: hidden;
+
+  .output-header {
+    padding: 10px 12px;
+    background: #f7f9fc;
+    border-bottom: 1px solid #e6e9f0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .output-content {
+    margin: 0;
+    padding: 12px;
+    font-size: 12px;
+    line-height: 18px;
+    white-space: pre-wrap;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  }
+}
