@@ -298,6 +298,15 @@
         border-right: none;
       }
       
+      &.left-panel,
+      &.middle-panel {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+        &::-webkit-scrollbar {
+          display: none; /* Chrome/Safari/WebKit */
+        }
+      }
+      
       &.left-panel {
         background: #fffcfc;
       }
@@ -677,8 +686,8 @@
   }
 }
 
-// 每列滚动条样式
-.three-way-diff-container .diff-panel {
+// 仅最右侧列显示滚动条样式
+.three-way-diff-container .diff-panel.right-panel {
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -723,6 +732,11 @@
       overflow-y: auto;
       overflow-x: hidden;
       flex-shrink: 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       
       .line-number-item {
         height: 18px;
