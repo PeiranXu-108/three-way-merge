@@ -33,6 +33,8 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   middleContent,
   onChange,
   onHasChangesChange,
+  leftColumnTitle = '版本1',
+  rightColumnTitle = '版本2',
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [freeEditContent, setFreeEditContent] = useState<string>('');
@@ -553,7 +555,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       </div>
 
       <div className="diff-headers">
-        <div className="panel-header left">你的版本</div>
+        <div className="panel-header left">{leftColumnTitle}</div>
         <div className="panel-header middle">
           合并结果
           <div className="header-actions">
@@ -566,7 +568,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
             </button>
           </div>
         </div>
-        <div className="panel-header right">线上版本</div>
+        <div className="panel-header right">{rightColumnTitle}</div>
       </div>
 
       <div className="diff-panels">

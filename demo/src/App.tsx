@@ -10,12 +10,11 @@ const App: React.FC = () => {
       <header className="demo-header">
         <div>
           <h1>Three-Way Diff Editor</h1>
-          <p>对比旧版本与新版本，选择合并结果</p>
         </div>
       </header>
 
       <section className="demo-editor">
-        <ThreeWayDiffEditor oldContent={oldContent} newContent={newContent} onChange={setMergedContent} />
+        <ThreeWayDiffEditor oldContent={oldContent} newContent={newContent} onChange={setMergedContent} leftColumnTitle='本地版本' rightColumnTitle='线上版本'/>
       </section>
 
       <section className="demo-output">

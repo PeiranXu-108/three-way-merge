@@ -27,6 +27,10 @@ export interface ThreeWayDiffEditorProps {
   onChange?: (mergedContent: string) => void;
   onHasChangesChange?: (hasChanges: boolean) => void;
   defaultEditMode?: boolean;
+  /** 左侧列标题，默认 "版本1" */
+  leftColumnTitle?: string;
+  /** 右侧列标题，默认 "版本2" */
+  rightColumnTitle?: string;
 }
 
 export interface CodeBlock {
