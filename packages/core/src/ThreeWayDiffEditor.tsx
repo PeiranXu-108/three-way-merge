@@ -709,6 +709,21 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
         </div>
       </div>
 
+      <div className="diff-footer">
+        <span className="diff-legend-item legend-added">
+          <span className="legend-swatch" />
+          {messages.statsAdded}
+        </span>
+        <span className="diff-legend-item legend-removed">
+          <span className="legend-swatch" />
+          {messages.statsRemoved}
+        </span>
+        <span className="diff-legend-item legend-modified">
+          <span className="legend-swatch" />
+          {messages.statsModified}
+        </span>
+      </div>
+
       {saveModalVisible && (
         <div className="twd-modal-mask" onClick={() => setSaveModalVisible(false)} role="presentation">
           <div className="twd-modal-wrap" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="twd-modal-title">
