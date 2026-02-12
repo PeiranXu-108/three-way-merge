@@ -1,14 +1,18 @@
 export const oldContent = `{
   "name": "ExampleConfig",
   "version": 1,
+  "description": "Initial configuration file",
   "features": {
     "search": true,
     "share": false,
-    "export": false
+    "export": false,
+    "analytics": true,
+    "debug": false
   },
   "limits": {
     "maxItems": 50,
-    "timeout": 5000
+    "timeout": 5000,
+    "cacheSize": 100
   },
   "theme": {
     "primary": "#1890ff",
@@ -16,7 +20,8 @@ export const oldContent = `{
   },
   "metadata": {
     "owner": "team-a",
-    "createdAt": "2023-06-01"
+    "createdAt": "2023-06-01",
+    "deprecated": true
   },
   "notes": [
     "alpha",
@@ -43,7 +48,11 @@ export const oldContent = `{
     "chi",
     "psi",
     "omega"
-  ]
+  ],
+  "legacy": {
+    "enabled": true,
+    "version": "1.0"
+  }
 }`;
 
 export const newContent = `{
@@ -52,20 +61,25 @@ export const newContent = `{
   "features": {
     "search": true,
     "share": true,
-    "export": true
+    "export": true,
+    "notifications": true,
+    "darkMode": false
   },
   "limits": {
     "maxItems": 100,
-    "timeout": 3000
+    "timeout": 3000,
+    "rateLimit": 1000
   },
   "theme": {
     "primary": "#1677ff",
-    "mode": "light"
+    "mode": "light",
+    "accent": "#52c41a"
   },
   "metadata": {
     "owner": "team-b",
     "createdAt": "2024-01-15",
-    "updatedAt": "2025-02-10"
+    "updatedAt": "2025-02-10",
+    "tags": ["production", "v2"]
   },
   "notes": [
     "alpha",
@@ -93,5 +107,9 @@ export const newContent = `{
     "psi",
     "omega",
     "extra"
-  ]
+  ],
+  "security": {
+    "encryption": true,
+    "apiKey": "required"
+  }
 }`;

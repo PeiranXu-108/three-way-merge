@@ -8,15 +8,9 @@
   ],
   "scripts": {
     "dev": "pnpm --filter three-way-diff-demo run dev",
-    "build": "pnpm --filter three-way-diff-editor run build && pnpm --filter three-way-diff-demo run build",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build": "pnpm --filter three-way-diff-editor run build && pnpm --filter three-way-diff-demo run build"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^8.3.0",
-    "@storybook/react": "^8.3.0",
-    "@storybook/react-vite": "^8.3.0",
-    "less": "^4.2.0",
-    "storybook": "^8.3.0"
+    "less": "^4.2.0"
   }
 }
