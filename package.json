@@ -11,6 +11,7 @@
     "build": "pnpm --filter three-way-diff-editor run build && pnpm --filter three-way-diff-demo run build"
   },
   "devDependencies": {
-    "less": "^4.2.0"
+    "less": "^4.2.0",
+    "diff": "^5.0.0"
   }
 }

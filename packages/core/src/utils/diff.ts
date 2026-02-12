@@ -56,7 +56,7 @@ export const computeCharDiffs = (
   for (const part of charDiffResult) {
     if (!part.added && !part.removed) {
       const chars = part.value.split('');
-      chars.forEach((char) => {
+      chars.forEach((char: string) => {
         oldDiffs.push({ type: 'unchanged', value: char, index: oldIndex });
         newDiffs.push({ type: 'unchanged', value: char, index: newIndex });
         oldIndex += 1;
@@ -64,13 +64,13 @@ export const computeCharDiffs = (
       });
     } else if (part.removed) {
       const chars = part.value.split('');
-      chars.forEach((char) => {
+      chars.forEach((char: string) => {
         oldDiffs.push({ type: 'removed', value: char, index: oldIndex });
         oldIndex += 1;
       });
     } else if (part.added) {
       const chars = part.value.split('');
-      chars.forEach((char) => {
+      chars.forEach((char: string) => {
         newDiffs.push({ type: 'added', value: char, index: newIndex });
         newIndex += 1;
       });
