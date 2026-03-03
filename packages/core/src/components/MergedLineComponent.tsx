@@ -1,5 +1,5 @@
 /**
- * 合并结果行组件（中间）
+ * Merged result line component (middle panel)
  */
 
 import React, { useContext, useEffect, useRef } from 'react';
@@ -32,7 +32,7 @@ const MergedLineComponent: React.FC<MergedLineComponentProps> = ({
   onBlockSelectRight,
 }) => {
   const messages = useContext(I18nContext);
-  // 只在"左右都有内容且不同"时显示双向选择按钮（减少 added/removed 行的噪音）
+  // Only show bidirectional select buttons when "both left and right have content and differ" (reduce noise from added/removed lines)
   const hasConflict = line.leftContent !== null && line.rightContent !== null && line.leftContent !== line.rightContent;
   const showButtons = hasConflict;
 

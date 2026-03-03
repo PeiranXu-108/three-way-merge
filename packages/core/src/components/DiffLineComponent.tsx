@@ -1,5 +1,5 @@
 /**
- * 单行 Diff 展示组件（左侧/右侧）
+ * Single line diff display component (left/right panels)
  */
 
 import React from 'react';
@@ -33,9 +33,8 @@ const DiffLineComponent: React.FC<DiffLineComponentProps> = React.memo(({ line, 
     if (!content) {
       return '';
     }
-
-    // 如果已经有字符级 diff 数据，使用它；否则使用纯文本
-    // 重点：不依赖 isVisible 来决定显示，避免滚动时闪现
+    // If character-level diff data already exists, use it; otherwise, use plain text.
+    // Key point: do not rely on isVisible to determine display, to avoid flickering during scrolling.
     if (charDiffs.length === 0) {
       return content;
     }

@@ -1,5 +1,5 @@
 /**
- * 折叠行组件（展示未显示的行）
+ * Collapsed row component (displays hidden lines)
  */
 
 import React, { useContext } from 'react';

@@ -27,7 +27,7 @@ const stripEmptyLines = (content: string) => {
     .join('\n');
 };
 
-// 主组件
+// Main component
 const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   oldContent,
   newContent,
@@ -87,7 +87,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     setInitialFreeEditContent(mergedContent);
   }, [oldContent, newContent, middleContent]);
 
-  // 检测是否有未保存的更改
+  // Detect if there are unsaved changes
   useEffect(() => {
     if (initialLines.length === 0) return;
 
@@ -108,7 +108,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       const next = [...prev];
       const leftContent = next[lineIndex].leftContent;
       const rightContent = next[lineIndex].rightContent;
-      // 重新计算字符级 diff
+      // Recalculate character-level diff
       const { oldDiffs, newDiffs } = computeCharDiffs(leftContent, rightContent);
       const updatedLine = {
         ...next[lineIndex],
@@ -128,7 +128,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       const next = [...prev];
       const rightContent = next[lineIndex].rightContent;
       const leftContent = next[lineIndex].leftContent;
-      // 重新计算字符级 diff
+      // Recalculate character-level diff
       const { oldDiffs, newDiffs } = computeCharDiffs(leftContent, rightContent);
       const updatedLine = {
         ...next[lineIndex],
@@ -193,7 +193,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     const removed = diffLines.filter((l) => l.type === 'removed').length;
     const modified = diffLines.filter((l) => l.type === 'modified').length;
 
-    // "冲突"：左右都有且不同（modified 里也会统计到）
+    // "Conflicts": both left and right have content and they differ (also counted in modified)
     const conflicts = diffLines.filter((l) => isConflictLine(l) && !l.conflictResolved).length;
 
     return { total, unchanged, added, removed, modified, conflicts };
@@ -222,7 +222,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     return codeBlocks.find((block) => lineIndex >= block.startIndex && lineIndex <= block.endIndex) || null;
   };
 
-  // 计算每个 block 是否可接受左/右（允许接受空行，即使内容为 null 也可以合并）
+  // Calculate whether each block can accept left/right (allow empty lines to be merged even if content is null)
   const blockAcceptability = useMemo(() => {
     const map = new Map<string, { canLeft: boolean; canRight: boolean }>();
     for (const b of codeBlocks) {
@@ -231,9 +231,9 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       for (let i = b.startIndex; i <= b.endIndex; i += 1) {
         const line = diffLines[i];
         if (line) {
-          canLeft = true; // 块内存在行，就可以接受左侧（包括空行）
-          canRight = true; // 块内存在行，就可以接受右侧（包括空行）
-          break; // 只要有一行存在，就可以接受，不需要继续检查
+          canLeft = true; // If a line exists in the block, we can accept the left side (including empty lines)
+          canRight = true; // If a line exists in the block, we can accept the right side (including empty lines)
+          break; // If any line exists, we can accept it, no need to continue checking
         }
       }
       map.set(`${b.startIndex}-${b.endIndex}`, { canLeft, canRight });
@@ -247,7 +247,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       for (let i = block.startIndex; i <= block.endIndex; i += 1) {
         const leftContent = next[i].leftContent;
         const rightContent = next[i].rightContent;
-        // 重新计算字符级 diff，对比新选中的内容和当前右侧内容
+        // Recalculate character-level diff, comparing newly selected content with current right side content
         const { oldDiffs, newDiffs } = computeCharDiffs(leftContent, rightContent);
         const updatedLine = {
           ...next[i],
@@ -269,7 +269,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       for (let i = block.startIndex; i <= block.endIndex; i += 1) {
         const rightContent = next[i].rightContent;
         const leftContent = next[i].leftContent;
-        // 重新计算字符级 diff，对比左侧内容和新选中的内容
+        // Recalculate character-level diff, comparing left side content with newly selected content
         const { oldDiffs, newDiffs } = computeCharDiffs(leftContent, rightContent);
         const updatedLine = {
           ...next[i],
@@ -291,7 +291,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   );
   const rowMetrics = useMemo(() => buildRowMetrics(renderRows), [renderRows]);
 
-  // 窗口化渲染，避免一次性渲染全部行导致卡顿
+  // Virtualized rendering to avoid rendering all lines at once which would cause lag
   const updateVisibleRange = useCallback(
     (scrollTop: number, viewportHeight: number) => {
       const rowCount = renderRows.length;
@@ -371,7 +371,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
 
   const handleToggleEditMode = () => {
     if (editMode) {
-      // 检查编辑内容是否有改动
+      // Check if edited content has changed
       if (freeEditContent !== initialFreeEditContent) {
         setSaveModalVisible(true);
       } else {
@@ -380,14 +380,14 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       return;
     }
 
-    // 进入编辑模式：初始化编辑内容
+    // Enter edit mode: initialize edit content
     const mergedContent = getMergedContent(diffLines);
     setFreeEditContent(mergedContent);
     setInitialFreeEditContent(mergedContent);
     setEditMode(true);
   };
 
-  // 绘制连接线
+  // Draw connector lines
   const drawConnectorLines = useCallback(() => {
     if (!canvasRef.current || !leftPanelRef.current || !rightPanelRef.current || !containerRef.current) return;
 
@@ -395,7 +395,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // 清除画布
+    // Clear canvas
     ctx.fillStyle = 'transparent';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -407,7 +407,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     const leftRect = leftPanel.getBoundingClientRect();
     const rightRect = rightPanel.getBoundingClientRect();
 
-    // 获取左右面板相对于容器的位置
+    // Get the position of left and right panels relative to the container
     const leftPanelLeft = leftRect.left - containerRect.left;
     const leftPanelWidth = leftRect.width;
     const rightPanelLeft = rightRect.left - containerRect.left;
@@ -416,7 +416,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     const rowsToDraw = visibleRowsRef.current;
     if (rowsToDraw.length === 0) return;
 
-    // 遍历可见 diff 行，找到对应的 DOM 元素并绘制连接线
+    // Traverse visible diff lines, find corresponding DOM elements and draw connector lines
     const processedLines = new Set<number>();
 
     rowsToDraw.forEach((row) => {
@@ -427,15 +427,15 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
 
       if (!line || processedLines.has(lineIndex)) return;
 
-      // 只绘制有差异的行
+      // Only draw lines with differences
       if (line.type === 'unchanged') return;
 
       processedLines.add(lineIndex);
 
-      // 获取左侧行的 DOM 元素
+      // Get the left side line's DOM element
       const leftLineEl = container.querySelector(`[data-line-index="${lineIndex}"][data-side="left"] .diff-line`) as HTMLElement;
 
-      // 获取右侧行的 DOM 元素
+      // Get the right side line's DOM element
       const rightLineEl = container.querySelector(`[data-line-index="${lineIndex}"][data-side="right"] .diff-line`) as HTMLElement;
 
       if (!leftLineEl || !rightLineEl) return;
@@ -443,25 +443,25 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       const leftLineRect = leftLineEl.getBoundingClientRect();
       const rightLineRect = rightLineEl.getBoundingClientRect();
 
-      // 相对于容器的位置
+      // Position relative to container
       const leftY = leftLineRect.top - containerRect.top + leftLineRect.height / 2;
       const rightY = rightLineRect.top - containerRect.top + rightLineRect.height / 2;
 
-      // 起点和终点
+      // Start and end points
       const startX = leftPanelLeft + leftPanelWidth - 2;
       const endX = rightPanelLeft + 2;
 
-      // 设置连接线样式：根据是否悬停改变样式
+      // Set connector line style: change style based on hover state
       const isHovered = hoveredLineIndexRef.current === lineIndex;
       ctx.strokeStyle = isHovered ? '#d4a373' : '#d4a373';
       ctx.lineWidth = isHovered ? 2.5 : 1.2;
       ctx.globalAlpha = isHovered ? 0.8 : 0.5;
 
-      // 绘制连接线
+      // Draw connector line
       ctx.beginPath();
       ctx.moveTo(startX, leftY);
 
-      // 使用二次贝塞尔曲线以获得更平滑的效果
+      // Use quadratic Bezier curve for smoother effect
       const cpX = (startX + endX) / 2;
       const cpY = (leftY + rightY) / 2;
       ctx.quadraticCurveTo(cpX, cpY, endX, rightY);
@@ -522,14 +522,14 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
     };
   }, [drawConnectorLines, scheduleVisibleRangeUpdate]);
 
-  // 在初始化或内容变化时，一次性计算所有字符级 diff
-  // 这样避免了虚拟滚动时的闪现问题
+  // On initialization or content change, calculate all character-level diffs at once
+  // This avoids flickering issues during virtual scrolling
   useEffect(() => {
     setDiffLines((prev) => {
       if (prev.length === 0) return prev;
 
       return prev.map((line) => {
-        // 如果已经有字符级 diff 数据，就不重新计算
+        // If character-level diff data already exists, don't recalculate
         if (line.leftCharDiffs !== undefined && line.rightCharDiffs !== undefined) {
           return line;
         }
@@ -587,7 +587,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
       </div>
 
       <div className="diff-panels">
-        {/* 左侧面板 */}
+        {/* Left panel */}
         <div className="diff-panel left-panel" ref={leftPanelRef} onScroll={handleScroll('left')}>
           {topSpacerHeight > 0 && <div className="virtual-spacer" style={{ height: topSpacerHeight }} />}
           {visibleRows.map((row) => {
@@ -620,7 +620,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
           {bottomSpacerHeight > 0 && <div className="virtual-spacer" style={{ height: bottomSpacerHeight }} />}
         </div>
 
-        {/* 中间面板 */}
+        {/* Middle panel */}
         <div className="diff-panel middle-panel" ref={middlePanelRef} onScroll={handleScroll('middle')}>
           {editMode ? (
             <FreeEditPanel
@@ -675,7 +675,7 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
           )}
         </div>
 
-        {/* 右侧面板 */}
+        {/* Right panel */}
         <div className="diff-panel right-panel" ref={rightPanelRef} onScroll={handleScroll('right')}>
           {topSpacerHeight > 0 && <div className="virtual-spacer" style={{ height: topSpacerHeight }} />}
           {visibleRows.map((row) => {

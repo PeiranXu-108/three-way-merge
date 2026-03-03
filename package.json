@@ -2,8 +2,8 @@
   "name": "three-way-diff-workspace",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "apps/*",
+    "packages/core",
+    "packages/adapter-vue",
     "demo"
   ],
   "scripts": {

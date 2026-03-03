@@ -1,5 +1,5 @@
 /**
- * 自由编辑模式面板
+ * Free edit mode panel
  */
 
 import React, { useRef, useMemo } from 'react';

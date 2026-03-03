@@ -1,5 +1,5 @@
 /**
- * ThreeWayDiffEditor 类型定义
+ * ThreeWayDiffEditor type definitions
  */
 
 import type { ThreeWayMessages } from '../i18n';
@@ -29,15 +29,15 @@ export interface ThreeWayDiffEditorProps {
   onChange?: (mergedContent: string) => void;
   onHasChangesChange?: (hasChanges: boolean) => void;
   defaultEditMode?: boolean;
-  /** 左侧列标题，默认 "版本1" */
+  /** Left column title, default "Version 1" */
   leftColumnTitle?: string;
-  /** 右侧列标题，默认 "版本2" */
+  /** Right column title, default "Version 2" */
   rightColumnTitle?: string;
-  /** 是否折叠无 diff 的未变更行，默认 true（收缩）；设为 false 时始终展开 */
+  /** Whether to collapse unchanged lines with no diff, default true (collapsed); set to false to always expand */
   collapseUnchangedLines?: boolean;
-  /** 语言：'en' | 'zh'，默认 'en' */
+  /** Language: 'en' | 'zh', default 'en' */
   locale?: 'en' | 'zh';
-  /** 覆盖部分文案 */
+  /** Override some text content */
   messages?: Partial<ThreeWayMessages>;
 }
 
