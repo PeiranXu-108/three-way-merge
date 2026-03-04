@@ -49,15 +49,13 @@ export default function Example() {
 }
 ```
 
-## Styles (Less)
+## Styles
 
-The component **does not** inject styles automatically. Import them at your app entry or where you use the editor. Use the package export:
+Styles are **injected automatically** by the component (plain CSS, no Less). If you need the raw CSS (e.g. for theme overrides), use:
 
 ```ts
 import 'three-way-diff-editor/styles';
 ```
-
-> Note: the `styles` export is a Less file (not compiled CSS). If your build does **not** support Less, add Less handling or compile this package’s Less in your pipeline.
 
 ## API
 

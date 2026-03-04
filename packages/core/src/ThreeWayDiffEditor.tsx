@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback, useLayoutEffect } from 'react';
-import './styles/index.less';
+import editorStyles from './styles/index.generated';
 
 import { CodeBlock, CollapsedBlockState, DiffLine, RenderRow, ThreeWayDiffEditorProps } from './types';
 import {
@@ -65,6 +65,16 @@ const ThreeWayDiffEditor: React.FC<ThreeWayDiffEditorProps> = ({
   const scrollStateRef = useRef({ scrollTop: 0, viewportHeight: 0 });
   const visibleRowsRef = useRef<RenderRow[]>([]);
   const hoveredLineIndexRef = useRef<number | null>(null);
+
+  useLayoutEffect(() => {
+    if (typeof document === 'undefined') return;
+    const id = 'three-way-diff-editor-styles';
+    if (document.getElementById(id)) return;
+    const el = document.createElement('style');
+    el.id = id;
+    el.textContent = editorStyles;
+    document.head.appendChild(el);
+  }, []);
 
   useEffect(() => {
     let lines = parseDiffToLines(oldContent, newContent);
