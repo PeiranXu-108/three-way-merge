@@ -1,109 +1,66 @@
 # three-way-diff-editor
 
-A **React** three-column (left / center / right) diff and merge editor: accept left/right per line, edit the merged result, virtual scrolling, and character-level highlighting.
-
-## Features
-
-- **Three-column view**: left (old / yours), center (merged result), right (new / theirs)
-- **Merge actions**:
-  - Toolbar: accept all left / accept all right / reset
-  - Per line: choose accept left/right for conflict lines, or edit the line
-  - Per block: accept left/right for contiguous change blocks
-- **Free-edit mode**: edit the full merged content; on exit, confirm save or discard. Save trims empty lines (see “Behavior”).
-- **Performance**: virtual scrolling (overscan) for large files
-- **Character-level diff**: compare left/right and highlight character differences
-- **Scroll sync**: three columns scroll together with connector lines between changed rows
+React three-column diff and merge editor: left (old) / center (merged) / right (new), with per-line or per-block accept, free-edit mode, virtual scrolling, and character-level highlighting.
 
 ## Install
 
 ```bash
-npm i three-way-diff-editor
-```
-
-Or with pnpm:
-
-```bash
+npm install three-way-diff-editor
+# or
 pnpm add three-way-diff-editor
 ```
 
-## Quick start
+**Peer dependencies:** React 18+
+
+## Usage
 
 ```tsx
-import React, { useState } from 'react';
 import { ThreeWayDiffEditor } from 'three-way-diff-editor';
 
-export default function Example() {
-  const [merged, setMerged] = useState('');
-
-  return (
-    <ThreeWayDiffEditor
-      oldContent={`{\n  "a": 1\n}\n`}
-      newContent={`{\n  "a": 2\n}\n`}
-      onChange={(nextMerged) => setMerged(nextMerged)}
-      onHasChangesChange={(hasChanges) => {
-        // e.g. for "unsaved changes" hints
-        console.log('hasChanges:', hasChanges);
-      }}
-    />
-  );
-}
+<ThreeWayDiffEditor
+  oldContent={leftText}
+  newContent={rightText}
+  onChange={setMerged}
+  onHasChangesChange={setHasChanges}
+/>
 ```
 
-## Styles
-
-Styles are **injected automatically** by the component (plain CSS, no Less). If you need the raw CSS (e.g. for theme overrides), use:
+Styles are injected by the component. To import the CSS yourself (e.g. for overrides):
 
 ```ts
 import 'three-way-diff-editor/styles';
 ```
 
-## API
+## Props
 
-### `ThreeWayDiffEditorProps`
+| Prop | Type | Description |
+|------|------|-------------|
+| `oldContent` | `string` | Left column (required) |
+| `newContent` | `string` | Right column (required) |
+| `middleContent` | `string` | Initial merged content |
+| `onChange` | `(merged: string) => void` | Called when merged result changes |
+| `onHasChangesChange` | `(hasChanges: boolean) => void` | Unsaved changes flag |
+| `leftColumnTitle` | `string` | Left column header |
+| `rightColumnTitle` | `string` | Right column header |
+| `collapseUnchangedLines` | `boolean` | Collapse unchanged blocks (default `true`) |
+| `locale` | `'en' \| 'zh'` | Language (default `'en'`) |
+| `messages` | `Partial<ThreeWayMessages>` | Override UI strings |
 
-| Prop | Type | Required | Description |
-| --- | --- | --- | --- |
-| `oldContent` | `string` | Yes | Left column content (old / yours) |
-| `newContent` | `string` | Yes | Right column content (new / theirs) |
-| `middleContent` | `string` | No | Initial merged content; when provided, overrides the default merge per line and marks those lines as `manual` |
-| `onChange` | `(mergedContent: string) => void` | No | Called when the merged result changes (line choice, inline edit, or free edit) |
-| `onHasChangesChange` | `(hasChanges: boolean) => void` | No | Whether the result has changed from the initial state (e.g. for “unsaved changes”) |
-| `defaultEditMode` | `boolean` | No | **Not used in current version** (reserved) |
-
-### Exported types
-
-You can import types from the package:
+## Types
 
 ```ts
-import type { DiffLine, DiffStats, ThreeWayDiffEditorProps } from 'three-way-diff-editor';
+import type {
+  ThreeWayDiffEditorProps,
+  DiffLine,
+  DiffStats,
+  CharDiff,
+  ThreeWayMessages,
+} from 'three-way-diff-editor';
 ```
 
-## Behavior (important)
+## Development and demo
 
-- **Conflict**: a line is in conflict when both left and right have content and they differ (`leftContent !== null && rightContent !== null && leftContent !== rightContent`). Unresolved conflicts are counted as “remaining conflicts”.
-- **Free-edit save**: on save, empty/whitespace-only lines are removed, then the result is synced back to internal `diffLines`.
-- **`middleContent` alignment**: overrides by line index (`middleContent.split('\n')[index]`). If the string has fewer lines, extra lines are not overridden.
-
-## Dependencies
-
-### Peer dependencies
-
-- `react` (>= 18)
-- `react-dom` (>= 18)
-
-### Dependencies
-
-- `diff`
-
-## Develop in this repo / run the demo
-
-From the repository root:
-
-```bash
-pnpm install
-pnpm --filter three-way-diff-demo dev
-```
-
+This package lives in a monorepo. For full docs, demo, and dev setup, see the [repository root](https://github.com/your-username/threeWayMerge) (replace with your GitHub repo URL).
 
 ## License
 
