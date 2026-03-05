@@ -3,6 +3,7 @@ node_modules
 .pnpm-store
 .DS_Store
 /dist
+demo/dist
 apps/**/dist
 packages/**/dist
 .vite

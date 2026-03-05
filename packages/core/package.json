@@ -7,16 +7,16 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "style": "src/styles/index.css",
+  "style": "dist/index.css",
   "sideEffects": ["**/*.css"],
-  "files": ["dist", "src", "README.md", "LICENSE"],
+  "files": ["dist"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles": "./src/styles/index.css"
+    "./styles": "./dist/index.css"
   },
   "peerDependencies": {
     "react": "^18.0.0",
@@ -33,7 +33,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "node scripts/generate-styles.js && tsup src/index.ts --format esm,cjs --dts",
+    "build": "node scripts/generate-styles.js && tsup src/index.ts --format esm,cjs --dts && node scripts/copy-css.js",
     "dev": "node scripts/generate-styles.js && tsup src/index.ts --format esm,cjs --dts --watch",
     "prepublishOnly": "pnpm run build"
   }
