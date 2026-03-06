@@ -30,8 +30,8 @@ importers:
         specifier: ^18.0.0
         version: 18.3.1(react@18.3.1)
       three-way-diff-editor:
-        specifier: workspace:*
-        version: link:../packages/core
+        specifier: ^0.1.0
+        version: 0.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18.0.0
@@ -975,6 +975,12 @@ packages:
   thenify@3.3.1:
     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
 
+  three-way-diff-editor@0.1.0:
+    resolution: {integrity: sha512-e8EagtaZwogM8uJH6WwCeehxYjpuJDZFu48Tp8GC0sZkTlvNGTAlabrRqD2gXtT6HBlLfK1NKD/G9r4jMLv1dQ==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+
   tinyexec@0.3.2:
     resolution: {integrity: sha512-KQQR9yN7R5+OSwaK0XQoj22pwHoTlgYqmUscPYoknOoWCWfj/5/ABTMRi69FrKU5ffPVh5QcFikpWJI/P1ocHA==}
 
@@ -1807,6 +1813,12 @@ snapshots:
   thenify@3.3.1:
     dependencies:
       any-promise: 1.3.0
+
+  three-way-diff-editor@0.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      diff: 5.2.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   tinyexec@0.3.2: {}
 
