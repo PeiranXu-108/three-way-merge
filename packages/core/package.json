@@ -1,6 +1,6 @@
 {
   "name": "three-way-diff-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Three-column diff editor with merge controls.",
   "license": "MIT",
   "author": "ryanxu",

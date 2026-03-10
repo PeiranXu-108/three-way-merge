@@ -2,6 +2,8 @@
 
 React three-column diff and merge editor: left (old) / center (merged) / right (new), with per-line or per-block accept, free-edit mode, virtual scrolling, and character-level highlighting.
 
+For full docs, demo, and dev setup, see the [repository root](https://github.com/PeiranXu-108/three-way-merge).
+
 ## Install
 
 ```bash
@@ -57,10 +59,6 @@ import type {
   ThreeWayMessages,
 } from 'three-way-diff-editor';
 ```
-
-## Development and demo
-
-This package lives in a monorepo. For full docs, demo, and dev setup, see the [repository root](https://github.com/your-username/threeWayMerge) (replace with your GitHub repo URL).
 
 ## License
 
