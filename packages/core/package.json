@@ -8,8 +8,12 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "style": "dist/index.css",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist"],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -23,6 +27,13 @@
     "react-dom": "^18.0.0"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/search": "^6.7.2",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@lezer/highlight": "^1.2.5",
     "diff": "^5.0.0"
   },
   "devDependencies": {
@@ -30,11 +41,13 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.7"
   },
   "scripts": {
     "build": "node scripts/generate-styles.js && tsup src/index.ts --format esm,cjs --dts && node scripts/copy-css.js",
     "dev": "node scripts/generate-styles.js && tsup src/index.ts --format esm,cjs --dts --watch",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build",
+    "test": "vitest run"
   }
 }

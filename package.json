@@ -16,6 +16,7 @@
     "build": "pnpm --filter three-way-diff-editor run build && pnpm --filter three-way-diff-demo run build"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "diff": "^5.0.0",
     "less": "^4.2.0",
     "only-allow": "^1.1.1"
