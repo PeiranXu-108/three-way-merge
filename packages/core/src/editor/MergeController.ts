@@ -360,7 +360,10 @@ export class MergeController {
   acceptRows(indices: number[], side: Side): void {
     if (this.free || !indices.length) return;
     const { states } = this.middle.state.field(rowStateField);
-    this.applyUpdates(acceptUpdates(this.model, states, indices, side), 'twd.accept');
+    if (!this.applyUpdates(acceptUpdates(this.model, states, indices, side), 'twd.accept')) {
+      // Legacy parity: every merge action reports the result, even when nothing changed.
+      this.callbacks.onChange(this.getMergedContent());
+    }
   }
 
   acceptAll(side: Side): void {

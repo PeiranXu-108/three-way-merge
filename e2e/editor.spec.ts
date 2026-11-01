@@ -114,6 +114,9 @@ test.describe('three-way diff editor (CodeMirror)', () => {
   test('accept all, undo and reset', async ({ page }) => {
     await open(page);
     const [oldContent, newContent] = [JSON_OLD, JSON_NEW];
+    // Like the legacy editor, a merge action reports the result even when nothing changes.
+    await page.getByRole('button', { name: 'Accept all right' }).click();
+    expect(await changes(page)).toEqual([newContent]);
     await page.getByRole('button', { name: 'Accept all left' }).click();
     expect(await merged(page)).toBe(oldContent);
     expect(await conflicts(page)).toBe(0);
