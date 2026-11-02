@@ -9,3 +9,5 @@ packages/**/dist
 .vite
 .vscode
 .idea
+test-results
+playwright-report

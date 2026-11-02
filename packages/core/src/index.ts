@@ -7,7 +7,10 @@ export type {
   CollapsedBlockState,
   DiffLine,
   DiffStats,
+  EditorLanguage,
+  EditorTheme,
   RenderRow,
+  ThreeWayDiffEditorHandle,
   ThreeWayDiffEditorProps,
 } from './types';
 

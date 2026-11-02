@@ -2,6 +2,7 @@
  * ThreeWayDiffEditor type definitions
  */
 
+import type { Extension } from '@codemirror/state';
 import type { ThreeWayMessages } from '../i18n';
 
 export interface CharDiff {
@@ -22,12 +23,21 @@ export interface DiffLine {
   rightCharDiffs?: CharDiff[];
 }
 
+export type EditorTheme = 'light' | 'dark';
+
+/** `auto` enables JSON syntax highlighting when both inputs are JSON objects/arrays */
+export type EditorLanguage = 'auto' | 'json' | 'text';
+
 export interface ThreeWayDiffEditorProps {
   oldContent: string;
   newContent: string;
+  /** Initial merged content; mapped onto the diff rows (lines that match neither side become manual) */
   middleContent?: string;
+  /** Called with the merged result after every merge action or edit (not on initial render) */
   onChange?: (mergedContent: string) => void;
+  /** Called with `false` after loading, then whenever the unsaved-changes state flips */
   onHasChangesChange?: (hasChanges: boolean) => void;
+  /** Open the merge result in free-edit mode on mount */
   defaultEditMode?: boolean;
   /** Left column title, default "Version 1" */
   leftColumnTitle?: string;
@@ -39,6 +49,30 @@ export interface ThreeWayDiffEditorProps {
   locale?: 'en' | 'zh';
   /** Override some text content */
   messages?: Partial<ThreeWayMessages>;
+  /** Colour theme (VS Code Light+ / Dark+), default 'light' */
+  theme?: EditorTheme;
+  /** Syntax highlighting, default 'auto' */
+  language?: EditorLanguage;
+  /** Extra CodeMirror extensions applied to every pane (memoize the array) */
+  extensions?: Extension[];
+  /** Pretty-print JSON objects/arrays before diffing, default true (legacy behaviour) */
+  normalizeJson?: boolean;
+  /** Remove empty / whitespace-only lines when saving free-edit changes, default true (legacy behaviour) */
+  trimEmptyLinesOnSave?: boolean;
+}
+
+/** Imperative API exposed through `ref` */
+export interface ThreeWayDiffEditorHandle {
+  /** Current merged result (including unsaved free-edit text) */
+  getMergedContent(): string;
+  acceptAllLeft(): void;
+  acceptAllRight(): void;
+  /** Restore the initial merge */
+  reset(): void;
+  /** Move the cursor to the next change block (F7) */
+  goToNextChange(): void;
+  /** Move the cursor to the previous change block (Shift+F7) */
+  goToPreviousChange(): void;
 }
 
 export interface CodeBlock {

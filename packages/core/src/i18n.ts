@@ -28,6 +28,12 @@ export interface ThreeWayMessages {
   showMoreBelow: (n: number) => string;
   acceptLeftBlock: (count: number) => string;
   acceptRightBlock: (count: number) => string;
+  /** Title of the per-line "accept left" button shown on conflict rows */
+  acceptLeftLine: string;
+  /** Title of the per-line "accept right" button shown on conflict rows */
+  acceptRightLine: string;
+  /** Tooltip on changed lines explaining the connector strips between panes */
+  connectorHint: string;
   defaultLeftColumnTitle: string;
   defaultRightColumnTitle: string;
 }
@@ -54,6 +60,9 @@ const messagesEn: ThreeWayMessages = {
   showMoreBelow: (n) => `▼ ${n}`,
   acceptLeftBlock: (count) => `Accept left block (${count} lines)`,
   acceptRightBlock: (count) => `Accept right block (${count} lines)`,
+  acceptLeftLine: 'Accept left line',
+  acceptRightLine: 'Accept right line',
+  connectorHint: 'Connector lines show the corresponding change',
   defaultLeftColumnTitle: 'Version 1',
   defaultRightColumnTitle: 'Version 2',
 };
@@ -80,6 +89,9 @@ const messagesZh: ThreeWayMessages = {
   showMoreBelow: (n) => `▼ ${n}`,
   acceptLeftBlock: (count) => `接受左侧块（${count}行）`,
   acceptRightBlock: (count) => `接受右侧块（${count}行）`,
+  acceptLeftLine: '接受左侧此行',
+  acceptRightLine: '接受右侧此行',
+  connectorHint: '连接线显示对应的修改',
   defaultLeftColumnTitle: '版本1',
   defaultRightColumnTitle: '版本2',
 };
