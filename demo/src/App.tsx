@@ -72,7 +72,6 @@ const App: React.FC = () => {
       <header className="demo-header">
         <div>
           <h1>Three-Way Diff Editor</h1>
-          <p>CodeMirror 6 · VS Code style · F7 / Shift+F7 jump between changes</p>
         </div>
         <div className="demo-controls">
           <label>
